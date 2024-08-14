@@ -65,6 +65,7 @@
       pamixer
       mako
       nwg-drawer
+      wlogout
     ])
     ++
     (with pkgs.kdePackages; [
@@ -141,14 +142,19 @@ programs.git = {
       "$terminal" = "konsole";
       "$fileManager" = "pcmanfm-qt";
       "$menu" = "wofi --show drun";
+      "$editor" = "kate";
+      "$browser" = "firefox";
       general = {
         "gaps_out" = "0";
       };
       bind = [
         "$mod, T, exec, $terminal"
+        "$mod, B, exec, $browser"
+        "$mod, Return, exec, $terminal"
         "ALT, F4, killactive,"
         "$mod SHIFT, Q, exit,"
-        "$mod, E, exec, $fileManager"
+        "$mod, F, exec, $fileManager"
+        "$mod, E, exec, $editor"
         "$mod, V, togglefloating,"
         "$mod, G, togglegroup,"
         "$mod, R, exec, $menu"
@@ -196,11 +202,11 @@ programs.git = {
         groupbar = {
           font_size = 12;
           height = 20;
-          "col.active" = "0xff0000ff";
-          "col.inactive" = "0x00404080";
+          "col.active" = "0xff3daee9";
+          "col.inactive" = "0xff2a2e32";
         };
-        "col.border_active" = "rgba(0000ff80) rgba(0000ffff) 45deg";
-        "col.border_inactive" = "rgba(4040c080)";
+        "col.border_active" = "0xff3daee9";
+        "col.border_inactive" = "0xff2a2e32";
       };
     };
   };
@@ -225,9 +231,9 @@ programs.git = {
         "memory"
         "temperature"
         "backlight"
-        "keyboard-state"
         "battery"
         "tray"
+        "custom/power"
     ];
     "keyboard-state" = {
         "numlock" = true;
@@ -345,9 +351,196 @@ programs.git = {
     "format"= "⮟";
     "tooltip"= false;
     "on-click"= "exec nwg-drawer";
+        };
+    "custom/power" = {
+    "format"= "⏻";
+    "tooltip"= false;
+    "on-click"= "exec wlogout";
   };
-    };
+};
   };
+  style =
+"
+@define-color red #da4453;
+@define-color orange #f67400;
+@define-color yellow #f6e400;
+@define-color green #27ae60;
+@define-color blue #3daee9;
+@define-color purple #6027ae;
+@define-color dark #2a2e32;
+@define-color light #eff0f1;
+
+* {
+    /* `otf-font-awesome` is required to be installed for icons */
+    font-family: FontAwesome, Roboto, Helvetica, Arial, sans-serif;
+    font-size: 13px;
+}
+
+window#waybar {
+    background-color: @dark;
+    border-bottom: 3px solid rgba(100, 114, 125, 0.5);
+    color: @light;
+    transition-property: background-color;
+    transition-duration: .5s;
+}
+
+#clock,
+#battery,
+#cpu,
+#memory,
+#disk,
+#temperature,
+#backlight,
+#network,
+#pulseaudio,
+#wireplumber,
+#custom-media,
+#tray,
+#mode,
+#idle_inhibitor,
+#scratchpad,
+#power-profiles-daemon,
+#custom-drawer,
+#mpd {
+    padding: 0 10px;
+    color: @light;
+    border-bottom: 3px solid rgba(100, 114, 125, 0.5);
+}
+
+#window,
+#workspaces {
+    margin: 0 4px;
+}
+
+/* If workspaces is the leftmost module, omit left margin */
+.modules-left > widget:first-child > #workspaces {
+    margin-left: 0;
+}
+
+/* If workspaces is the rightmost module, omit right margin */
+.modules-right > widget:last-child > #workspaces {
+    margin-right: 0;
+}
+
+#clock {
+    background-color: @dark;
+    color: @light;
+}
+
+#custom-drawer {
+    background-color: @purple;
+    color: @light;
+}
+
+#battery {
+    background-color: @blue;
+    color: @dark;
+}
+#battery.warning {
+    background-color: @orange;
+    color: @dark;
+}
+#battery.charging, #battery.plugged {
+    color: @light;
+    background-color: @green;
+}
+
+@keyframes blink {
+    to {
+    background-color: @light;
+    color: @dark;
+    }
+}
+
+/* Using steps() instead of linear as a timing function to limit cpu usage */
+#battery.critical:not(.charging) {
+    background-color: @red;
+    color: @light;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: steps(12);
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+#power-profiles-daemon {
+    padding-right: 15px;
+}
+
+#power-profiles-daemon.performance {
+    background-color: @red;
+    color: @light;
+}
+
+#power-profiles-daemon.balanced {
+    background-color: @blue;
+    color: @light;
+}
+
+#power-profiles-daemon.power-saver {
+    background-color: @green;
+    color: @dark;
+}
+
+label:focus {
+    background-color: @dark;
+}
+
+#cpu {
+    background-color: @yellow;
+    color: @dark;
+}
+
+#memory {
+    background-color: @yellow;
+    color: @dark;
+}
+
+#disk {
+    background-color: @yellow;
+    color: @dark;
+}
+
+#backlight {
+    background-color: @light;
+    color: @dark;
+}
+
+#network {
+    background-color: @blue;
+}
+
+#network.disconnected {
+    background-color: @red;
+}
+
+#pulseaudio {
+    background-color: @purple;
+    color: @light;
+}
+
+
+#temperature {
+    background-color: @orange;
+    color: @dark;
+}
+
+#temperature.critical {
+    background-color: @red;
+}
+
+#tray {
+    background-color: @blue;
+}
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+    background-color: @red;
+}";
   };
   gtk = {
     enable = true;
@@ -373,12 +566,12 @@ programs.git = {
 
   qt = {
     enable = true;
-    platformTheme.name = "qtct";
+    platformTheme.name = "gtk3";
   };
   services.mako = {
     enable = true;
     defaultTimeout = 4000;
-    backgroundColor = "#000000";
+    backgroundColor = "#2a2e32";
     borderRadius = 20;
     font = "monospace 12";
     padding = "10";
