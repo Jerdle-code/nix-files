@@ -101,17 +101,6 @@
     #   org.gradle.daemon.idletimeout=3600000
     # '';
   };
-  # Home Manager can also manage your environment variables through
-  # 'home.sessionVariables'. If you don't want to manage your shell through Home
-  # Manager then you have to manually source 'hm-session-vars.sh' located at
-  # either
-  #
-  #  ~/.nix-profile/etc/profile.d/hm-session-vars.sh
-  #
-  # or
-  #
-  #  /etc/profiles/per-user/daniel/etc/profile.d/hm-session-vars.sh
-  #
   home.sessionVariables = {
     EDITOR = "nano";
   };
@@ -128,8 +117,6 @@
   };
 programs.git = {
     enable = true;
-    userName = "Jerdle-code";
-    userEmail = "danielamdurer@gmail.com";
     extraConfig = {
       credential.helper = "${
           pkgs.git.override { withLibsecret = true; }
@@ -181,7 +168,7 @@ programs.git = {
       [
         "lxqt-policykit-agent"
         "nm-applet"
-        "keepassxc --keyfile /home/daniel/FDO /home/daniel/FDO.kdbx"
+        "keepassxc --keyfile $HOME/FDO $HOME/FDO.kdbx"
         "gammastep"
         "wvkbd-mobintl"
         "waybar"
