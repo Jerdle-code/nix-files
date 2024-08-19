@@ -1,10 +1,12 @@
 { config, pkgs, lib, ... }:
 
 {
+  imports =
+    [
+      ./user.nix
+    ];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
-  home.username = "daniel";
-  home.homeDirectory = "/home/daniel";
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
@@ -146,6 +148,7 @@ programs.git = {
       "$browser" = "firefox";
       general = {
         "gaps_out" = "0";
+        "gaps_in" = "0";
       };
       bind = [
         "$mod, T, exec, $terminal"
