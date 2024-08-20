@@ -3,7 +3,7 @@
 {
   imports =
     [
-      ./user.nix
+      ./imports/user.nix
     ];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -86,6 +86,10 @@
   programs.zsh = {
     enable = true;
     initExtra = "fastfetch";
+    ohmyZsh = {
+        enable = true;
+        theme = "tjkirch";
+    };
   };
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
