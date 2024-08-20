@@ -88,7 +88,7 @@
   programs.zsh = {
     enable = true;
     initExtra = "fastfetch";
-    ohmyZsh = {
+    oh-my-zsh = {
         enable = true;
         theme = "tjkirch";
     };
