@@ -6,8 +6,8 @@
 {
   imports =
     [ # Include the results of the hardware scan.
-      ./imports/hardware-configuration.nix
-      ./imports/users.nix
+      ./imports/ignore/hardware-configuration.nix
+      ./imports/ignore/users.nix
     ];
 
   # Bootloader.
