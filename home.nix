@@ -198,7 +198,11 @@ programs.git = {
         "col.border_active" = "0xff3daee9";
         "col.border_inactive" = "0xff2a2e32";
       };
-    };
+      windowrulev2 = [
+      "suppressevent maximize, class:.*"
+      "suppressevent fullscreen, class:.*"
+    ];
+  };
   };
   programs.waybar = {
     enable = true;
