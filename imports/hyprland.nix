@@ -8,6 +8,7 @@ wayland.windowManager.hyprland = {
       "$terminal" = "konsole";
       "$fileManager" = "pcmanfm-qt";
       "$menu" = "wofi --show drun";
+      "$menu" = "wofi --show run";
       "$editor" = "kate";
       "$browser" = "firefox";
       general = {
@@ -25,6 +26,7 @@ wayland.windowManager.hyprland = {
         "$mod, V, togglefloating,"
         "$mod, G, togglegroup,"
         "$mod, R, exec, $menu"
+        "ALT, F2, exec, $run"
         "$mod, P, pseudo, # dwindle"
         "$mod, J, togglesplit, # dwindle"
         ",XF86AudioRaiseVolume, exec, volumectl -u up"
