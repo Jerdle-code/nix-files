@@ -24,6 +24,7 @@
   nixpkgs.config.allowUnfree = true;
   home.packages = (with pkgs; [
       firefox
+      vivaldi
       (prismlauncher.override { jdks = [ jdk8 jdk17 jdk21 ]; })
       fastfetch
       libreoffice-fresh
@@ -53,7 +54,7 @@
       nwg-look
       keepassxc
       thunderbird
-      gnome.dconf-editor
+      dconf-editor
       pcmanfm-qt
       eww
       lxqt.lxqt-archiver
@@ -154,6 +155,11 @@ programs.git = {
   qt = {
     enable = true;
     platformTheme.name = "gtk3";
+  };
+  home.pointerCursor = {
+    package = pkgs.vanilla-dmz;
+    name = "Vanilla-DMZ";
+    size = 24;
   };
   services.mako = {
     enable = true;

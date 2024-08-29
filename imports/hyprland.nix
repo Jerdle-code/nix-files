@@ -10,7 +10,7 @@ wayland.windowManager.hyprland = {
       "$menu" = "wofi --show drun";
       "$run" = "wofi --show run";
       "$editor" = "kate";
-      "$browser" = "firefox";
+      "$browser" = "vivaldi";
       general = {
         "gaps_out" = "0";
         "gaps_in" = "0";
@@ -26,6 +26,7 @@ wayland.windowManager.hyprland = {
         "$mod, V, togglefloating,"
         "$mod, G, togglegroup,"
         "$mod, R, exec, $menu"
+        "$mod SHIFT, F, fullscreen,"
         "ALT, F2, exec, $run"
         "$mod, P, pseudo, # dwindle"
         "$mod, J, togglesplit, # dwindle"

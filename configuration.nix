@@ -59,15 +59,15 @@ boot.kernelPackages = pkgs.linuxPackages_latest;
 programs.hyprland.enable = true;
 services.geoclue2.enable = true;
 users.users.geoclue.extraGroups = [ "networkmanager" ];
-hardware.opengl.extraPackages = with pkgs; [
+hardware.graphics.extraPackages = with pkgs; [
   rocmPackages.clr.icd
   amdvlk
 ];
 # For 32 bit applications 
-hardware.opengl.extraPackages32 = with pkgs; [
+hardware.graphics.extraPackages32 = with pkgs; [
   driversi686Linux.amdvlk
 ];
-hardware.opengl.driSupport32Bit = true; # For 32 bit applications
+hardware.graphics.enable32Bit = true; # For 32 bit applications
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -81,8 +81,6 @@ hardware.opengl.driSupport32Bit = true; # For 32 bit applications
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
-  # Enable sound with pipewire.
-  sound.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   programs.dconf.enable = true;
@@ -140,9 +138,11 @@ programs.steam.enable = true;
 nix.settings.auto-optimise-store = true;
 services.power-profiles-daemon.enable = true;
 services.upower.enable=true;
-services.xserver.gdk-pixbuf.modulePackages = [ pkgs.librsvg ];
+programs.gdk-pixbuf.modulePackages = [ pkgs.librsvg ];
 services.udisks2.enable = true;
 security.polkit.enable = true;
+services.flatpak.enable = true;
+services.gvfs.enable = true;
 # List services that you want to enable:
 #  services.auto-cpufreq.enable = true;
 #   virtualisation.virtualbox.host.enable = true;
@@ -161,6 +161,12 @@ fonts.packages = with pkgs; [
   # Enable the OpenSSH daemon.
    services.openssh.enable = true;
    programs.ssh.askPassword = "lxqt-openssh-askpass";
+
+virtualisation.docker.enable = true;
+virtualisation.docker.rootless = {
+  enable = true;
+  setSocketVariable = true;
+};
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
