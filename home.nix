@@ -23,11 +23,9 @@
   # environment.
   nixpkgs.config.allowUnfree = true;
   home.packages = (with pkgs; [
-      firefox
       vivaldi
       (prismlauncher.override { jdks = [ jdk8 jdk17 jdk21 ]; })
       fastfetch
-      libreoffice-fresh
       superTuxKart
       superTux
       gzdoom
@@ -53,24 +51,19 @@
       gammastep
       nwg-look
       keepassxc
-      thunderbird
       dconf-editor
       pcmanfm-qt
-      eww
       lxqt.lxqt-archiver
       networkmanagerapplet
       calibre
       wvkbd
       webcamoid
       praat
-      wofi
-      waybar
       pavucontrol
       avizo
       pamixer
       mako
-      nwg-drawer
-      wlogout
+      pandoc
     ])
     ++
     (with pkgs.kdePackages; [
@@ -80,11 +73,14 @@
     qtstyleplugin-kvantum
     qt6ct
     konsole
-    kate
+    yakuake
     kcalc
     okular
     kolourpaint
     gwenview
+    filelight
+    kate
+    calligra
 ]);
   programs.zsh = {
     enable = true;
@@ -110,6 +106,7 @@
   };
   home.sessionVariables = {
     EDITOR = "nano";
+    QT_QPA_PLATFORMTHEME = "kde";
   };
 
   # Let Home Manager install and manage itself.
@@ -129,37 +126,6 @@ programs.git = {
           pkgs.git.override { withLibsecret = true; }
         }/bin/git-credential-libsecret";
     };
-  };
-  gtk = {
-    enable = true;
-
-    iconTheme = {
-      name = "breeze-dark";
-      package = pkgs.kdePackages.breeze-icons;
-    };
-
-    theme = {
-      name = "Breeze-Dark";
-      package = pkgs.kdePackages.breeze-gtk;
-    };
-
-    gtk3.extraConfig = {
-        gtk-application-prefer-dark-theme=1;
-    };
-
-    gtk4.extraConfig = {
-        gtk-application-prefer-dark-theme=1;
-    };
-  };
-
-  qt = {
-    enable = true;
-    platformTheme.name = "gtk3";
-  };
-  home.pointerCursor = {
-    package = pkgs.vanilla-dmz;
-    name = "Vanilla-DMZ";
-    size = 24;
   };
   services.mako = {
     enable = true;

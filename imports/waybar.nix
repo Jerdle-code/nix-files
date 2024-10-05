@@ -7,23 +7,15 @@
         "layer" = "top";
     "height" = 30;
     "spacing" = 4;
-    "modules-left" = [
-        "custom/drawer"
-    ];
     "modules-center" = [
         "clock"
     ];
     "modules-right" = [
-        "pulseaudio"
-        "network"
         "power-profiles-daemon"
         "cpu"
         "memory"
         "temperature"
         "backlight"
-        "battery"
-        "tray"
-        "custom/power"
     ];
     "keyboard-state" = {
         "numlock" = true;
@@ -158,6 +150,7 @@
 @define-color blue #3daee9;
 @define-color purple #6027ae;
 @define-color dark #2a2e32;
+@define-color bg rgba(0,0,0,0);
 @define-color light #eff0f1;
 
 * {
@@ -167,8 +160,8 @@
 }
 
 window#waybar {
-    background-color: @dark;
-    border-bottom: 3px solid rgba(100, 114, 125, 0.5);
+    background-color: @bg;
+    border-bottom: 0px solid rgba(100, 114, 125, 0.0);
     color: @light;
     transition-property: background-color;
     transition-duration: .5s;
@@ -194,7 +187,7 @@ window#waybar {
 #mpd {
     padding: 0 10px;
     color: @light;
-    border-bottom: 3px solid rgba(100, 114, 125, 0.5);
+    border-bottom: 0px solid rgba(100, 114, 125, 0.0);
 }
 
 #window,
@@ -213,7 +206,7 @@ window#waybar {
 }
 
 #clock {
-    background-color: @dark;
+    background-color: @bg;
     color: @light;
 }
 

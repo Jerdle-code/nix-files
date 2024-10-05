@@ -56,7 +56,17 @@ boot.kernelPackages = pkgs.linuxPackages_latest;
   services.xserver.videoDrivers = [ "amdgpu" ];
   # Enable the KDE Plasma Desktop Environment.
   services.displayManager.sddm.enable = true;
+    services.desktopManager.plasma6.enable = true;
 programs.hyprland.enable = true;
+programs.wayfire = {
+  enable = true;
+  plugins = with pkgs.wayfirePlugins; [
+  wcm
+  wf-shell
+  wayfire-plugins-extra
+  firedecor
+    ];
+};
 services.geoclue2.enable = true;
 users.users.geoclue.extraGroups = [ "networkmanager" ];
 hardware.graphics.extraPackages = with pkgs; [
@@ -124,6 +134,7 @@ virtualisation.libvirtd.enable = true;
       upower
       kdePackages.partitionmanager
       git
+      kdePackages.qtwayland
   ];
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -134,7 +145,6 @@ virtualisation.libvirtd.enable = true;
   # };
   system.autoUpgrade.enable  = true;
   programs.zsh.enable = true;
-programs.steam.enable = true;
 nix.settings.auto-optimise-store = true;
 services.power-profiles-daemon.enable = true;
 services.upower.enable=true;
